@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface ButtonProps {
-  size: "sm" | "md";
+  size?: "sm" | "md";
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
