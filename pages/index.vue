@@ -1,13 +1,8 @@
 <template>
-  <div class="flex flex-col justify-between min-h-svh text-white">
+  <div class="flex flex-col justify-between min-h-svh">
     <div>
       <AppHeader></AppHeader>
-
-      <div class="flex justify-center">
-        <TwToggle />
-      </div>
-
-      <BaseCarousel></BaseCarousel>
+      <AppHero></AppHero>
     </div>
     <AppFooter></AppFooter>
   </div>
