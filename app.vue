@@ -3,7 +3,7 @@
 </template>
 
 <style>
-html {
+/* html {
   background: black;
-}
+} */
 </style>
