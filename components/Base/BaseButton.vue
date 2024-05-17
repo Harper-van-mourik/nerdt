@@ -19,7 +19,7 @@ const buttonClasses = computed(() => {
 
 <template>
   <button
-    class="text-sm text-white shadow bg-slate-950 hover:bg-slate-800 active:bg-slate-700 focus:outline-none focus:ring focus:ring-slate-300"
+    class="text-sm text-white shadow bg-slate-950 hover:bg-slate-800 active:bg-slate-700 focus-visible:outline-dashed focus-visible:outline-2 outline-offset-2"
     :class="buttonClasses"
   >
     <slot />
