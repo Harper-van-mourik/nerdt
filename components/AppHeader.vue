@@ -13,7 +13,7 @@
           <BaseNavLink href="/posts">Posts</BaseNavLink>
           <BaseNavLink href="/about">About</BaseNavLink>
         </div>
-        <BaseButton size="sm">Login</BaseButton>
+        <BaseNavButton size="sm">Login</BaseNavButton>
       </div>
     </div>
   </nav>
