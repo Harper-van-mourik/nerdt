@@ -1,7 +1,7 @@
 <template>
-  <button
-    class="px-2 py-1 text-sm rounded hover:underline active:text-slate-700 focus:outline-none focus:ring focus:ring-slate-300"
+  <NuxtLink
+    class="rounded hover:underline active:text-slate-700 focus-visible:outline-dashed focus-visible:outline-2"
   >
     <slot />
-  </button>
+  </NuxtLink>
 </template>
