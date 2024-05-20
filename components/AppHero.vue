@@ -11,7 +11,7 @@
         paste code, not even a keyboard needed.
       </h1>
 
-      <BaseNavButton>Shut up, give me the goodies.</BaseNavButton>
+      <BaseButton to="/">Shut up, give me the goodies.</BaseButton>
     </div>
   </div>
 </template>

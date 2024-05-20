@@ -18,10 +18,10 @@ const buttonClasses = computed(() => {
 </script>
 
 <template>
-  <Button
-    class="text-sm text-white shadow bg-slate-950 hover:bg-slate-800 active:bg-slate-700 focus-visible:outline-dashed focus-visible:outline-2 outline-offset-2"
+  <NuxtLink
+    class="text-sm text-white shadow bg-slate-950 hover:bg-slate-800 active:bg-slate-700"
     :class="buttonClasses"
   >
     <slot></slot>
-  </Button>
+  </NuxtLink>
 </template>

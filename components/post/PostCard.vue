@@ -10,7 +10,7 @@ const { slug, featured_image, title } = props;
   <NuxtLink :to="`/posts/${slug}`" class="block group rounded-xl">
     <div
       :style="`background-image: url('${featured_image}')`"
-      class="flex flex-col justify-end h-48 p-2 overflow-hidden transition-all ease-in bg-center bg-no-repeat bg-cover rounded-xl group-hover:p-0 group-hover:duration-300 group-focus:p-0 group-focus:duration-300 outline-white outline-2 -outline-offset-4"
+      class="flex flex-col justify-end h-48 p-2 overflow-hidden transition-all ease-in bg-center bg-no-repeat bg-cover rounded-xl group-hover:p-0 group-hover:duration-300 group-focus:p-0 group-focus:duration-300"
     >
       <div
         class="relative flex flex-col w-full p-6 text-white transition-all ease-in group-hover:p-8 group-hover:gap-2 group-focus:p-8 group-focus:gap-2 rounded-xl bg-gradient-to-r from-black/70 to-black/30 backdrop-blur-sm group-hover:h-full group-hover:duration-300 group-focus:h-full group-focus:duration-300"

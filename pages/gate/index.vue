@@ -2,6 +2,6 @@
   <div class="container md:container">
     <div class="text-xl font-bold">Admin's gate</div>
 
-    <BaseNavButton to="/gate/post">Post settings</BaseNavButton>
+    <BaseButton to="/gate/post">Post settings</BaseButton>
   </div>
 </template>
