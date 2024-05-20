@@ -19,26 +19,26 @@
       </p>
 
       <section class="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
-        <BaseCard>
+        <AboutCard>
           <template #title>Tricks and Techniques</template>
           Dive deep into our collection of cutting-edge tricks and techniques
           designed to elevate your front-end development skills. From (Tailwind)
           CSS animations to innovative JavaScript hacks, we've got you covered.
-        </BaseCard>
+        </AboutCard>
 
-        <BaseCard>
+        <AboutCard>
           <template #title>Code Snippets</template>
           Need a quick solution to a common coding problem? Look no further than
           our extensive library of code snippets. From responsive layouts to
           interactive UI elements, you'll find code snippets for every occasion.
-        </BaseCard>
+        </AboutCard>
 
-        <BaseCard class="md:col-span-2">
+        <AboutCard class="md:col-span-2">
           <template #title>Design Inspiration</template>
           Stuck in a design rut? Browse our curated gallery of stunning designs
           for fresh inspiration. Whether you're working on a website, web app,
           or mobile app, you'll find plenty of ideas to spark your creativity.
-        </BaseCard>
+        </AboutCard>
       </section>
 
       <p class="font-bold">Our Mission:</p>

@@ -8,11 +8,15 @@ const posts = usePosts();
     <div class="grid grid-cols-4 gap-6">
       <NuxtLink
         :to="`/posts/${slug}`"
-        class="flex flex-col justify-end inline-block h-32 p-4 border rounded-md shadow active:text-slate-700 focus:outline-none focus:ring focus:ring-slate-300 border-slate-200"
         v-for="{ title, content, slug } in posts"
+        class="rounded-md focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-offset-2"
       >
-        <div class="font-bold">{{ title }}</div>
-        <div>{{ content }}</div>
+        <BaseCard>
+          <div class="p-6">
+            <div class="font-bold">{{ title }}</div>
+            <div>{{ content }}</div>
+          </div>
+        </BaseCard>
       </NuxtLink>
     </div>
   </div>
