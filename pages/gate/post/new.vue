@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex justify-center md:containerw">
+  <div class="container flex justify-center md:container">
     <BaseCard>
       <div class="flex flex-col gap-6 p-4 max-w-64 border-slate-200">
         <div class="text-xl font-bold text-center">New post</div>

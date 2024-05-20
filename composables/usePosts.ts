@@ -1,4 +1,4 @@
-export interface Posts {
+export declare interface Post {
   id: number;
   slug: string;
   title: string;
@@ -7,7 +7,7 @@ export interface Posts {
   time: number;
 }
 
-export const posts: Posts[] = [
+export const posts: Post[] = [
   {
     id: 0,
     slug: "first-post",
