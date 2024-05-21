@@ -44,7 +44,7 @@ function getTextAfterSlash(input: string) {
       </div>
     </div>
   </section>
-  <section class="container px-4 pb-4 md:container">
+  <section class="container px-4 py-8 md:container">
     <div class="grid gap-4 lg:grid-cols-4 lg:gap-8">
       <div class="lg:col-span-2 lg:col-start-2">
         <h1 class="pb-2 text-xl font-bold">{{ title }}</h1>
