@@ -12,26 +12,36 @@ function getTextAfterSlash(input: string) {
 
 <template>
   <section class="text-xs">
-    <div class="container flex flex-col gap-2 py-8 md:container">
-      <div class="flex justify-between px-4">
-        <span>
-          <NuxtLink :to="`/posts/`" class="font-bold hover:underline"
-            >Posts</NuxtLink
-          ><span class="text-slate-500">
-            / {{ getTextAfterSlash(path) }}</span
-          ></span
+    <div class="container flex flex-col gap-2 md:container">
+      <div class="relative">
+        <img
+          :src="featured_image"
+          :alt="title"
+          class="object-cover w-full h-48 lg:h-96 rounded-xl"
+        />
+        <div
+          class="absolute top-0 left-0 flex flex-col justify-end w-full h-full p-4"
         >
+          <div
+            class="flex justify-between text-white [&>div]:bg-gradient-to-r [&>div]:from-black/70 [&>div]:to-black/30 [&>div]:rounded-lg [&>div]:backdrop-blur-sm"
+          >
+            <div class="flex pr-3">
+              <NuxtLink :to="`/posts/`" class="py-2 pl-3 font-bold underline"
+                >Posts</NuxtLink
+              >
+              <p class="py-2 text-slate-50">
+                &nbsp;/ {{ getTextAfterSlash(path) }}
+              </p>
+            </div>
 
-        <p>
-          {{ formatTime(time) }}
-        </p>
+            <div class="px-3 py-2">
+              <p>
+                {{ formatTime(time) }}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <img
-        :src="featured_image"
-        alt=""
-        class="object-cover w-full h-48 lg:h-96 rounded-xl"
-      />
     </div>
   </section>
   <section class="container px-4 pb-4 md:container">
