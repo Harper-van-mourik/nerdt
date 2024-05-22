@@ -7,10 +7,10 @@
 
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2">
-          <BaseNavLink href="/posts">Posts</BaseNavLink>
-          <BaseNavLink href="/about">About</BaseNavLink>
+          <BaseNavLink to="/posts">Posts</BaseNavLink>
+          <BaseNavLink to="/about">About</BaseNavLink>
         </div>
-        <BaseButton to="/" size="sm">Login</BaseButton>
+        <BaseButton to="/gate" size="sm">Login</BaseButton>
       </div>
     </div>
   </nav>
