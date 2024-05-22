@@ -51,13 +51,13 @@ const tiptapClasses = computed((): string[] => [
 </script>
 
 <template>
-  <BaseButton @click="addImage" size="sm"> Add image url &#43;</BaseButton>
+  <div class="flex flex-col gap-4">
+    <div class="flex gap-2 p-2 bg-white rounded-md shadow">
+      <BaseButton @click="addImage" size="sm"> Add image url &#43;</BaseButton>
+    </div>
 
-  <hr />
-
-  <hr />
-
-  <div :class="tiptapClasses">
-    <EditorContent :editor="editor" v-if="editor" />
+    <div :class="tiptapClasses">
+      <EditorContent :editor="editor" v-if="editor" />
+    </div>
   </div>
 </template>
