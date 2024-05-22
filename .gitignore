@@ -17,6 +17,9 @@ logs
 .DS_Store
 Thumbs.db
 
+# Firebase
+service-account.json
+
 # Local env files
 .env
 .env.*
