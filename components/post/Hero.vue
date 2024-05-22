@@ -34,9 +34,15 @@ function getTextAfterSlash(input: string) {
               <p class="py-2 text-slate-50">&nbsp;/ {{ slug }}</p>
             </div>
 
-            <div class="px-3 py-2" v-if="time">
-              <p>
-                {{ formatTime(time) }}
+            <div
+              class="px-3 py-2"
+              v-if="timestamp_created || timestamp_updated"
+            >
+              <p v-if="timestamp_updated">
+                {{ formatTime(timestamp_updated) }}
+              </p>
+              <p v-else-if="timestamp_created">
+                {{ formatTime(timestamp_created) }}
               </p>
             </div>
           </div>
