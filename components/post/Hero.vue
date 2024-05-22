@@ -2,7 +2,6 @@
 import type { Post } from "~/composables/usePosts";
 
 const post = defineProps<Post>();
-const { featured_image, title, time } = post;
 const { formatTime } = useTime();
 
 const { path } = useRoute();
@@ -15,7 +14,7 @@ function getTextAfterSlash(input: string) {
 
 <template>
   <section class="text-xs">
-    <div class="container flex flex-col gap-2 md:container">
+    <div class="flex flex-col gap-2">
       <div class="relative">
         <img
           :src="featured_image"
@@ -32,9 +31,7 @@ function getTextAfterSlash(input: string) {
               <NuxtLink :to="`/posts/`" class="py-2 pl-3 font-bold underline"
                 >Posts</NuxtLink
               >
-              <p class="py-2 text-slate-50">
-                &nbsp;/ {{ getTextAfterSlash(path) }}
-              </p>
+              <p class="py-2 text-slate-50">&nbsp;/ {{ slug }}</p>
             </div>
 
             <div class="px-3 py-2" v-if="time">

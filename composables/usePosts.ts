@@ -1,10 +1,10 @@
 export declare interface Post {
-  id: number;
-  slug: string;
+  id?: number;
+  slug?: string;
   title: string;
   content: string;
   featured_image: string;
-  time: number;
+  time?: number;
 }
 
 export const posts: Post[] = [

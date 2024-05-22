@@ -1,27 +1,22 @@
 <script setup lang="ts">
-const { path } = useRoute();
-const { formatTime } = useTime();
 const posts = usePosts();
 const { title, time, content, featured_image } = posts[1];
-
-function getTextAfterSlash(input: string) {
-  const parts = input.split("/");
-  return parts[parts.length - 1];
-}
 </script>
 
 <template>
-  <PostHero v-bind="posts[1]" />
-  <section class="container px-4 py-8 md:container">
-    <div class="grid gap-4 lg:grid-cols-4 lg:gap-8">
-      <div class="lg:col-span-2 lg:col-start-2">
+  <div class="container flex flex-col gap-8 md:container">
+    <PostHero v-bind="posts[1]" />
+
+    <div class="grid grid-cols-12">
+      <div class="col-span-3"></div>
+      <div class="col-span-6">
         <h1 class="pb-2 text-xl font-bold">{{ title }}</h1>
 
         <p>
           {{ content }}
         </p>
       </div>
-      <div class="flex flex-col col-span-1 gap-4">
+      <div class="flex flex-col col-span-3 gap-4">
         <p class="font-bold">Related posts</p>
 
         <div class="flex flex-col gap-4">
@@ -31,5 +26,5 @@ function getTextAfterSlash(input: string) {
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
