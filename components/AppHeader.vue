@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { useCurrentUser } from "vuefire";
+
+const user = useCurrentUser();
+</script>
 <template>
   <nav class="container md:container">
     <div class="flex items-center justify-between py-4">
@@ -10,7 +15,13 @@
           <BaseNavLink to="/posts">Posts</BaseNavLink>
           <BaseNavLink to="/about">About</BaseNavLink>
         </div>
-        <BaseButton to="/gate" size="sm">Login</BaseButton>
+
+        <template v-if="user">
+          <BaseButton to="/gate" size="sm">Gate</BaseButton>
+        </template>
+        <template v-else>
+          <BaseButton to="/login" size="sm">Login</BaseButton>
+        </template>
       </div>
     </div>
   </nav>
