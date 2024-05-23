@@ -17,7 +17,7 @@ const componentToShow = computed(() => {
   <component
     :is="componentToShow"
     :to="to"
-    class="flex items-center justify-center w-full px-2 rounded-2xl aspect-square hover:bg-slate-900"
+    class="w-full px-3 py-2 text-sm rounded-2xl hover:bg-slate-900"
   >
     <slot></slot>
   </component>
