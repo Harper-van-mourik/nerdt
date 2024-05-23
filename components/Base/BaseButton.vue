@@ -29,7 +29,7 @@ const componentToShow = computed(() => {
   <component
     :to="to"
     :is="componentToShow"
-    class="text-sm text-white shadow bg-slate-950 hover:bg-slate-800 active:bg-slate-700"
+    class="text-sm text-white transition-colors shadow bg-slate-950 hover:bg-slate-800 active:bg-slate-700 disabled:bg-slate-950/20"
     :class="buttonClasses"
   >
     <slot></slot>
