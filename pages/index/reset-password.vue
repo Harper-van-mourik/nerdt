@@ -23,6 +23,14 @@ function submitPasswordReset(email: string): void {
       isLoading.value = false;
     });
 }
+
+const user = await getCurrentUser();
+
+if (user) {
+  navigateTo({
+    path: "/",
+  });
+}
 </script>
 
 <template>

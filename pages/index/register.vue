@@ -26,6 +26,14 @@ function submitSignUp(email: string, password: string): void {
       isLoading.value = false;
     });
 }
+
+const user = await getCurrentUser();
+
+if (user) {
+  navigateTo({
+    path: "/",
+  });
+}
 </script>
 
 <template>
