@@ -12,7 +12,7 @@ const post: Ref<Post> = ref({
 </script>
 
 <template>
-  <div class="container flex flex-col gap-8 md:container">
+  <div class="flex flex-col gap-8">
     <PostHero v-bind="post" />
 
     <PostContentWrapper>

@@ -8,7 +8,9 @@ definePageMeta({
   <div class="flex h-full">
     <GateNavigation />
     <div class="w-full py-8 overflow-y-scroll">
-      <NuxtPage />
+      <div class="container md:container">
+        <NuxtPage />
+      </div>
     </div>
   </div>
 </template>

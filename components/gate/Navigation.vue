@@ -14,10 +14,11 @@
 
         <div class="flex flex-col gap-2">
           <GateNavLink to="/gate/post"> Posts </GateNavLink>
+          <GateNavLink to="/gate/settings"> Settings </GateNavLink>
         </div>
       </div>
 
-      <GateNavLink to="/"> &#x21a4; </GateNavLink>
+      <GateNavLink @click="signOutToLogin"> &#x21a4; </GateNavLink>
     </div>
   </div>
 </template>
