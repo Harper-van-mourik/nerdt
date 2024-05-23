@@ -10,6 +10,7 @@ export function formatTime(time: number, options?: object) {
 }
 
 export function formatFirebaseSecondsTime(seconds: number, options?: object) {
+  if (!seconds) return "";
   const sec = seconds * 1000;
   return formatTime(sec, options);
 }

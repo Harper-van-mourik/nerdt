@@ -3,7 +3,10 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
-import Code from "@tiptap/extension-code";
+
+const emit = defineEmits<{
+  (e: "change", value: string): void;
+}>();
 
 const editor = useEditor({
   content: `
@@ -19,7 +22,11 @@ const editor = useEditor({
   <p><a target="_blank" rel="noopener noreferrer nofollow" href="https://images.unsplash.com/photo-1605816988069-b11383b50717?q=80&amp;w=2976&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">A link</a></p>
   <p></p>
   <img src="https://images.unsplash.com/photo-1605816988069-b11383b50717?q=80&amp;w=2976&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" contenteditable="false" draggable="true" class="ProseMirror-selectednode">`,
-  extensions: [StarterKit, Image, Link, Code],
+  extensions: [StarterKit, Image, Link],
+  onUpdate: ({ editor }) => {
+    const html: string = editor.getHTML();
+    emit("change", html);
+  },
 });
 
 Image.configure({

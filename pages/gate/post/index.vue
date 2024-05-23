@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useFirestore } from "vuefire";
-const db = useFirestore();
 
 import { useCollection } from "vuefire";
 import { collection } from "firebase/firestore";
 
+const db = useFirestore();
 const firePosts = useCollection(collection(db, "posts"));
 
 const timeOptions = {
@@ -55,23 +55,27 @@ const timeOptions = {
             <p>{{ status }}</p>
           </div>
           <div>
-            <p class="text-sm">
-              {{
-                formatFirebaseSecondsTime(
-                  timestamp_created.seconds,
-                  timeOptions
-                )
-              }}
+            <p class="text-sm" v-if="timestamp_created">
+              <ClientOnly>
+                {{
+                  formatFirebaseSecondsTime(
+                    timestamp_created.seconds,
+                    timeOptions
+                  )
+                }}
+              </ClientOnly>
             </p>
 
-            <p class="text-xs text-slate-500">
-              updated:
-              {{
-                formatFirebaseSecondsTime(
-                  timestamp_updated.seconds,
-                  timeOptions
-                )
-              }}
+            <p class="text-xs text-slate-500" v-if="timestamp_updated">
+              <ClientOnly>
+                updated:
+                {{
+                  formatFirebaseSecondsTime(
+                    timestamp_updated.seconds,
+                    timeOptions
+                  )
+                }}
+              </ClientOnly>
             </p>
           </div>
 
@@ -81,15 +85,6 @@ const timeOptions = {
                 >View</BaseLink
               >
             </div>
-            <!-- <div>
-            <BaseLink>Edit</BaseLink>
-          </div>
-          <div>
-            <BaseLink>Copy</BaseLink>
-          </div>
-          <div>
-            <BaseLink>Delete</BaseLink>
-          </div> -->
           </div>
         </div>
       </div>

@@ -2,14 +2,15 @@
 import type { Post } from "~/composables/usePosts";
 
 const post = defineProps<Post>();
-const { formatTime } = useTime();
 
-const { path } = useRoute();
-
-function getTextAfterSlash(input: string) {
-  const parts = input.split("/");
-  return parts[parts.length - 1];
-}
+const timeOptions = {
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+};
 </script>
 
 <template>
@@ -39,10 +40,24 @@ function getTextAfterSlash(input: string) {
               v-if="timestamp_created || timestamp_updated"
             >
               <p v-if="timestamp_updated">
-                {{ formatTime(timestamp_updated) }}
+                <ClientOnly>
+                  {{
+                    formatFirebaseSecondsTime(
+                      timestamp_updated.seconds,
+                      timeOptions
+                    )
+                  }}
+                </ClientOnly>
               </p>
               <p v-else-if="timestamp_created">
-                {{ formatTime(timestamp_created) }}
+                <ClientOnly>
+                  {{
+                    formatFirebaseSecondsTime(
+                      timestamp_created.seconds,
+                      timeOptions
+                    )
+                  }}
+                </ClientOnly>
               </p>
             </div>
           </div>

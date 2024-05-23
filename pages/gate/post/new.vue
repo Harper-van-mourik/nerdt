@@ -1,14 +1,39 @@
 <script setup lang="ts">
+import { Timestamp, doc, setDoc } from "firebase/firestore";
 import type { Post } from "~/composables/usePosts";
 
+const tiptapOutputHtml: Ref<string> = ref("");
+
 const post: Ref<Post> = ref({
-  id: 0,
   title: "Title goes here",
   slug: "",
+  status: "draft",
   content: "",
+
   featured_image:
     "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 });
+
+const db = useFirestore();
+
+async function createPost() {
+  // the slug is also the id
+  if (!post.value?.slug) return;
+
+  const firebaseDateNow: Timestamp = Timestamp.now();
+
+  if (!post.value.timestamp_created) {
+    post.value.timestamp_created = firebaseDateNow;
+  }
+
+  post.value.timestamp_updated = firebaseDateNow;
+
+  await setDoc(doc(db, "posts", post.value?.slug), post.value);
+}
+
+function tiptapChange(html: string) {
+  post.value.content = html;
+}
 </script>
 
 <template>
@@ -18,11 +43,11 @@ const post: Ref<Post> = ref({
     <PostContentWrapper>
       <template #title>{{ post.title }}</template>
       <div>
-        <TiptapEditor />
+        <TiptapEditor @change="tiptapChange" />
       </div>
 
       <template #right>
-        <form class="flex flex-col gap-4" @submit.prevent="">
+        <form class="flex flex-col gap-4" @submit.prevent="createPost">
           <div class="flex justify-between">
             <div class="text-xl font-bold text-center">New post</div>
             <BaseButton submit>Create post</BaseButton>
