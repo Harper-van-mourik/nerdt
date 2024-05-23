@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const posts = usePosts();
-const { title, time, content, featured_image } = posts[1];
+const { title, content } = posts[1];
 </script>
 
 <template>
