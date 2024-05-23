@@ -4,3 +4,12 @@ export const useTime = () => {
   };
   return { formatTime };
 };
+
+export function formatTime(time: number, options?: object) {
+  return new Intl.DateTimeFormat(undefined, options).format(time);
+}
+
+export function formatFirebaseSecondsTime(seconds: number, options?: object) {
+  const sec = seconds * 1000;
+  return formatTime(sec, options);
+}

@@ -1,18 +1,24 @@
+export declare type PostStatus = "published" | "draft" | "archived";
+
 export declare interface Post {
   id?: number;
   slug?: string;
   title: string;
   content: string;
+  status: string;
   featured_image: string;
   timestamp_created?: number;
   timestamp_updated?: number;
 }
 
+// demo content
+// todo: delete this
 export const posts: Post[] = [
   {
     id: 0,
     slug: "first-post",
     title: "First post",
+    status: "published",
     content:
       "Hello first post. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit tortor in diam ornare, eu aliquet lacus maximus. Pellentesque enim ante, euismod quis ante in, ullamcorper fringilla diam.",
     featured_image:
@@ -23,6 +29,7 @@ export const posts: Post[] = [
     id: 1,
     slug: "second-post",
     title: "Second posted post",
+    status: "draft",
     content:
       "CSS animations like no other. Donec egestas tellus quis viverra semper. Duis at lectus leo. Aenean tristique porta enim, eget aliquam nisi semper sit amet. ",
     featured_image:
@@ -34,3 +41,9 @@ export const posts: Post[] = [
 export const usePosts = () => {
   return posts;
 };
+
+const postsSlug = "/posts";
+
+export function returnPostsSlug(slug: string): string {
+  return `${postsSlug}/${slug}`;
+}
