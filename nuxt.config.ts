@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   vuefire: {
     auth: {
       enabled: true,
+      sessionCookie: true,
     },
     config: {
       apiKey: process.env.FIREBASE_API_KEY,
