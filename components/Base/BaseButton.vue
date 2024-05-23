@@ -1,10 +1,10 @@
 <script setup lang="ts">
-interface ButtonProps {
+interface Button {
   size?: "sm" | "md";
   to?: string;
 }
 
-const props = withDefaults(defineProps<ButtonProps>(), {
+const props = withDefaults(defineProps<Button>(), {
   size: "md",
 });
 
