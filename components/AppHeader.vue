@@ -10,7 +10,7 @@
           <BaseNavLink to="/posts">Posts</BaseNavLink>
           <BaseNavLink to="/about">About</BaseNavLink>
         </div>
-        <BaseButton to="/gate" size="sm">Gate</BaseButton>
+        <BaseButton to="/gate" size="sm">Login</BaseButton>
       </div>
     </div>
   </nav>
