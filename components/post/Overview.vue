@@ -26,76 +26,84 @@ async function archivePost(id: string) {
     status,
   });
 }
+
+function statusColorClasses(status: PostStatus) {
+  switch (status) {
+    case "published":
+      return "bg-emerald-500";
+      break;
+    case "draft":
+      return "bg-amber-500";
+      break;
+    default:
+      return "bg-rose-500";
+  }
+}
 </script>
 
 <template>
   <div
-    class="overflow-hidden border border-solid shadow-xl rounded-xl border-slate-200"
+    class="overflow-x-scroll border border-solid shadow-xl rounded-xl border-slate-200"
   >
-    <div class="overflow-x-scroll">
-      <div
-        class="grid grid-cols-4 px-4 pt-2 pb-1 text-sm font-medium border-b border-1 text-slate-500"
-      >
-        <div class="col-auto">Name</div>
-        <div>Status</div>
-        <div>Time</div>
-        <div>Actions</div>
+    <div
+      class="flex px-4 pt-2 pb-1 text-sm font-medium border-b border-1 text-slate-500 bg-slate-50"
+    >
+      <div class="grow min-w-96">Name</div>
+      <div class="text-center min-w-16">Status</div>
+      <div class="text-right min-w-48">Time</div>
+      <div class="text-right min-w-48">Actions</div>
+    </div>
+    <div
+      v-for="{
+        id,
+        title,
+        slug,
+        status,
+        timestamp_created,
+        timestamp_updated,
+      } in firePosts"
+      class="flex px-4 py-2 transition-colors odd:bg-slate-50 hover:bg-slate-100"
+    >
+      <div class="flex flex-col text-left grow min-w-96">
+        <p class="font-bold line-clamp-1">{{ title }}</p>
+        <p class="text-xs text-slate-500">/{{ slug }}</p>
       </div>
-      <div
-        v-for="{
-          id,
-          title,
-          slug,
-          status,
-          timestamp_created,
-          timestamp_updated,
-        } in firePosts"
-        class="grid grid-cols-4 px-4 py-2 transition-colors bg-slate-50 hover:bg-slate-100"
-      >
-        <div class="flex flex-col">
-          <p class="font-bold">{{ title }}</p>
-          <p class="text-xs text-slate-500">/{{ slug }}</p>
+
+      <div class="flex items-center justify-center min-w-16">
+        <div
+          class="w-2 h-2 rounded-full"
+          :class="statusColorClasses(status)"
+        ></div>
+      </div>
+
+      <div class="text-right">
+        <p class="text-sm" v-if="timestamp_created">
+          <ClientOnly>
+            {{
+              formatFirebaseSecondsTime(timestamp_created.seconds, timeOptions)
+            }}
+          </ClientOnly>
+        </p>
+
+        <p class="text-xs text-slate-500 min-w-48" v-if="timestamp_updated">
+          <ClientOnly>
+            updated:
+            {{
+              formatFirebaseSecondsTime(timestamp_updated.seconds, timeOptions)
+            }}
+          </ClientOnly>
+        </p>
+      </div>
+
+      <div class="flex justify-end gap-2 text-sm min-w-48">
+        <div>
+          <BaseLink target="_blank" :to="returnPostsSlug(slug)">View</BaseLink>
         </div>
         <div>
-          <p>{{ status }}</p>
+          <BaseLink @click="archivePost(id)">Archive</BaseLink>
         </div>
         <div>
-          <p class="text-sm" v-if="timestamp_created">
-            <ClientOnly>
-              {{
-                formatFirebaseSecondsTime(
-                  timestamp_created.seconds,
-                  timeOptions
-                )
-              }}
-            </ClientOnly>
-          </p>
-
-          <p class="text-xs text-slate-500" v-if="timestamp_updated">
-            <ClientOnly>
-              updated:
-              {{
-                formatFirebaseSecondsTime(
-                  timestamp_updated.seconds,
-                  timeOptions
-                )
-              }}
-            </ClientOnly>
-          </p>
-        </div>
-
-        <div class="flex gap-2 text-sm">
-          <div>
-            <BaseLink target="_blank" :to="returnPostsSlug(slug)"
-              >View</BaseLink
-            >
-          </div>
-          <div>
-            <BaseLink @click="archivePost(id)">Archive</BaseLink>
-          </div>
-          <div>
-            <BaseLink :to="'posts/edit/' + id">Edit</BaseLink>
-          </div>
+          <BaseLink :to="'posts/edit/' + id">Edit</BaseLink>
         </div>
       </div>
     </div>
