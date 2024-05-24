@@ -2,6 +2,12 @@ import { Timestamp } from "firebase/firestore";
 
 export declare type PostStatus = "published" | "draft" | "archived";
 
+export const postStatusOptions: { value: PostStatus; label: string }[] = [
+  { value: "published", label: "Published" },
+  { value: "draft", label: "Draft" },
+  { value: "archived", label: "Archived" },
+];
+
 export declare interface Post {
   id?: string;
   slug?: string;
