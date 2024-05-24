@@ -13,7 +13,7 @@
         </NuxtLink>
 
         <div class="flex flex-col gap-2">
-          <GateNavLink to="/gate/post"> Posts </GateNavLink>
+          <GateNavLink to="/gate/posts"> Posts </GateNavLink>
           <GateNavLink to="/gate/settings"> Settings </GateNavLink>
         </div>
       </div>

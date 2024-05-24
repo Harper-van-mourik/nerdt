@@ -93,6 +93,9 @@ async function archivePost(id: string) {
           <div>
             <BaseLink @click="archivePost(id)">Archive</BaseLink>
           </div>
+          <div>
+            <BaseLink :to="'posts/edit/' + id">Edit</BaseLink>
+          </div>
         </div>
       </div>
     </div>

@@ -1,20 +1,42 @@
 <script setup lang="ts">
-import { Timestamp, doc, setDoc, collection } from "firebase/firestore";
+import { Timestamp, doc, setDoc, getDoc, collection } from "firebase/firestore";
 import type { Post } from "~/composables/usePosts";
+import { postDefaultContent } from "~/composables/usePosts";
+
+interface Props {
+  isNew?: boolean;
+  initialPost?: any;
+}
+const props = withDefaults(defineProps<Props>(), {});
 
 const tiptapOutputHtml: Ref<string> = ref("");
 
-const post: Ref<Post> = ref({
-  title: "Title goes here",
-  slug: "",
-  status: "draft",
-  content: "",
+const post: Ref<Post | null> = ref(null);
 
-  featured_image:
-    "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+onMounted(() => {
+  if (!!props.isNew) {
+    post.value = {
+      title: "Title goes here",
+      slug: "",
+      status: "draft",
+      content: postDefaultContent,
+      featured_image:
+        "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    };
+  } else {
+    post.value = props.initialPost;
+  }
 });
 
 const db = useFirestore();
+
+function savePost() {
+  if (props.isNew) {
+    createPost();
+  } else {
+    updatePost();
+  }
+}
 
 async function createPost() {
   // the slug is also the id
@@ -22,7 +44,7 @@ async function createPost() {
 
   const firebaseDateNow: Timestamp = Timestamp.now();
 
-  if (!post.value.timestamp_created) {
+  if (props.isNew) {
     post.value.timestamp_created = firebaseDateNow;
   }
 
@@ -35,19 +57,23 @@ async function createPost() {
   });
 }
 
+async function updatePost() {
+  //
+}
+
 function tiptapChange(html: string) {
-  post.value.content = html;
+  post.value!.content = html;
 }
 </script>
 
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-8" v-if="post">
     <PostHero v-bind="post" />
 
     <PostContentWrapper>
       <template #title>{{ post.title }}</template>
       <div>
-        <TiptapEditor @change="tiptapChange" />
+        <TiptapEditor v-model="post.content" />
       </div>
 
       <template #right>
