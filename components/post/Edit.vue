@@ -38,7 +38,7 @@ function savePost() {
   }
 }
 
-async function createPost() {
+async function createPost(): Promise<void> {
   // the slug is also the id
   if (!post.value?.slug) return;
 
@@ -54,14 +54,18 @@ async function createPost() {
   await setDoc(newDocRef, {
     id: newDocRef.id,
     ...post.value,
+  }).then((): void => {
+    navigateTo({
+      path: `/gate/posts/edit/${newDocRef.id}`,
+    });
   });
 }
 
-async function updatePost() {
+async function updatePost(): Promise<void> {
   //
 }
 
-function tiptapChange(html: string) {
+function tiptapChange(html: string): void {
   post.value!.content = html;
 }
 </script>
