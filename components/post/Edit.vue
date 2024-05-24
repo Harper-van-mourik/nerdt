@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { Timestamp, doc, setDoc, getDoc, collection } from "firebase/firestore";
+import {
+  Timestamp,
+  doc,
+  setDoc,
+  collection,
+  updateDoc,
+} from "firebase/firestore";
 import type { Post } from "~/composables/usePosts";
-import { postDefaultContent } from "~/composables/usePosts";
 
 interface Props {
   isNew?: boolean;
@@ -9,28 +14,17 @@ interface Props {
 }
 const props = withDefaults(defineProps<Props>(), {});
 
-const tiptapOutputHtml: Ref<string> = ref("");
-
 const post: Ref<Post | null> = ref(null);
 
-onMounted(() => {
-  if (!!props.isNew) {
-    post.value = {
-      title: "Title goes here",
-      slug: "",
-      status: "draft",
-      content: postDefaultContent,
-      featured_image:
-        "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    };
-  } else {
-    post.value = props.initialPost;
-  }
+onMounted((): void => {
+  setInitialPost();
 });
 
-const db = useFirestore();
+function setInitialPost(): void {
+  post.value = props.isNew ? postDefault : props.initialPost;
+}
 
-function savePost() {
+function submitPost(): void {
   if (props.isNew) {
     createPost();
   } else {
@@ -38,16 +32,12 @@ function savePost() {
   }
 }
 
+const db = useFirestore();
 async function createPost(): Promise<void> {
-  // the slug is also the id
-  if (!post.value?.slug) return;
+  if (!post.value) return;
 
   const firebaseDateNow: Timestamp = Timestamp.now();
-
-  if (props.isNew) {
-    post.value.timestamp_created = firebaseDateNow;
-  }
-
+  post.value.timestamp_created = firebaseDateNow;
   post.value.timestamp_updated = firebaseDateNow;
 
   const newDocRef = doc(collection(db, "posts"));
@@ -55,6 +45,8 @@ async function createPost(): Promise<void> {
     id: newDocRef.id,
     ...post.value,
   }).then((): void => {
+    post.value!.id = newDocRef.id;
+
     navigateTo({
       path: `/gate/posts/edit/${newDocRef.id}`,
     });
@@ -62,11 +54,10 @@ async function createPost(): Promise<void> {
 }
 
 async function updatePost(): Promise<void> {
-  //
-}
+  if (!post.value?.id) return;
+  const docRef = doc(db, "posts", post.value?.id);
 
-function tiptapChange(html: string): void {
-  post.value!.content = html;
+  await updateDoc(docRef, { ...post.value });
 }
 </script>
 
@@ -81,10 +72,13 @@ function tiptapChange(html: string): void {
       </div>
 
       <template #right>
-        <form class="flex flex-col gap-4" @submit.prevent="createPost">
+        <form class="flex flex-col gap-4" @submit.prevent="submitPost()">
           <div class="flex justify-between">
             <div class="text-xl font-bold text-center">New post</div>
-            <BaseButton submit>Create post</BaseButton>
+            <BaseButton submit>
+              <template v-if="post.id">Update post</template>
+              <template v-else>Create post</template>
+            </BaseButton>
           </div>
 
           <FormInput
