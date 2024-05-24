@@ -95,7 +95,7 @@ function statusColorClasses(status: PostStatus) {
         </p>
       </div>
 
-      <div class="flex justify-end gap-2 text-sm min-w-48">
+      <div class="flex items-center justify-end gap-2 text-sm min-w-48">
         <div>
           <BaseLink target="_blank" :to="returnPostsSlug(slug)">View</BaseLink>
         </div>
