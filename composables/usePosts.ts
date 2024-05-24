@@ -3,7 +3,7 @@ import { Timestamp } from "firebase/firestore";
 export declare type PostStatus = "published" | "draft" | "archived";
 
 export declare interface Post {
-  id?: number;
+  id?: string;
   slug?: string;
   title: string;
   content: string;
@@ -17,7 +17,7 @@ export declare interface Post {
 // todo: delete this
 export const posts: Post[] = [
   {
-    id: 0,
+    id: "0",
     slug: "first-post",
     title: "First post",
     status: "published",
@@ -27,7 +27,7 @@ export const posts: Post[] = [
       "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    id: 1,
+    id: "1",
     slug: "second-post",
     title: "Second posted post",
     status: "draft",
@@ -46,4 +46,20 @@ const postsSlug = "/posts";
 
 export function returnPostsSlug(slug: string): string {
   return `${postsSlug}/${slug}`;
+}
+
+export function createSimpleHash(length: number) {
+  let result: string = "";
+
+  const characters: string =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength: number = characters.length;
+  let counter: number = 0;
+
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+
+  return result;
 }
