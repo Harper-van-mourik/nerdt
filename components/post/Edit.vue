@@ -81,17 +81,10 @@ async function updatePost(): Promise<void> {
             </BaseButton>
           </div>
 
-          <select
+          <FormSelect
             v-model="post.status"
-            class="block w-full px-3 py-2 text-sm bg-white border rounded-md shadow-sm focus:outline-2 border-slate-300 focus:outline-dashed placeholder-slate-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none focus:outline-offset-2 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-          >
-            <option
-              :value="value"
-              v-for="{ value, label } in postStatusOptions"
-            >
-              {{ label }}
-            </option>
-          </select>
+            :options="postStatusOptions"
+          ></FormSelect>
 
           <FormInput
             v-model="post.title"
