@@ -46,7 +46,7 @@ function statusColorClasses(status: PostStatus) {
     class="overflow-x-scroll border border-solid shadow-xl rounded-xl border-slate-200"
   >
     <div
-      class="flex px-4 pt-2 pb-1 text-sm font-medium border-b border-1 text-slate-500 bg-slate-50"
+      class="flex px-4 pt-2 pb-1 text-sm font-medium border-b border-1 text-slate-500 bg-slate-50 min-w-fit"
     >
       <div class="grow min-w-96">Name</div>
       <div class="text-center min-w-16">Status</div>
@@ -62,7 +62,7 @@ function statusColorClasses(status: PostStatus) {
         timestamp_created,
         timestamp_updated,
       } in firePosts"
-      class="flex px-4 py-2 transition-colors odd:bg-slate-50 hover:bg-slate-100"
+      class="flex px-4 py-2 transition-colors odd:bg-slate-50 hover:bg-slate-100 min-w-fit"
     >
       <div class="flex flex-col text-left grow min-w-96">
         <p class="font-bold line-clamp-1">{{ title }}</p>
