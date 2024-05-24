@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Timestamp, doc, setDoc } from "firebase/firestore";
+import { Timestamp, doc, setDoc, collection } from "firebase/firestore";
 import type { Post } from "~/composables/usePosts";
 
 const tiptapOutputHtml: Ref<string> = ref("");
@@ -28,7 +28,11 @@ async function createPost() {
 
   post.value.timestamp_updated = firebaseDateNow;
 
-  await setDoc(doc(db, "posts", post.value?.slug), post.value);
+  const newDocRef = doc(collection(db, "posts"));
+  await setDoc(newDocRef, {
+    id: newDocRef.id,
+    ...post.value,
+  });
 }
 
 function tiptapChange(html: string) {
