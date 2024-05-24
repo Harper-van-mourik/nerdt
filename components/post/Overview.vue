@@ -2,7 +2,8 @@
 import { useFirestore } from "vuefire";
 
 import { useCollection } from "vuefire";
-import { collection } from "firebase/firestore";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import type { PostStatus } from "~/composables/usePosts";
 
 const db = useFirestore();
 const firePosts = useCollection(collection(db, "posts"));
@@ -15,6 +16,16 @@ const timeOptions = {
   minute: "numeric",
   second: "numeric",
 };
+
+async function archivePost(id: string) {
+  const docRef = doc(db, "posts", id);
+
+  const status: PostStatus = "archived";
+
+  await updateDoc(docRef, {
+    status,
+  });
+}
 </script>
 
 <template>
@@ -32,6 +43,7 @@ const timeOptions = {
       </div>
       <div
         v-for="{
+          id,
           title,
           slug,
           status,
@@ -77,6 +89,9 @@ const timeOptions = {
             <BaseLink target="_blank" :to="returnPostsSlug(slug)"
               >View</BaseLink
             >
+          </div>
+          <div>
+            <BaseLink @click="archivePost(id)">Archive</BaseLink>
           </div>
         </div>
       </div>
