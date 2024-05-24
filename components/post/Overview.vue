@@ -8,6 +8,23 @@ import type { PostStatus } from "~/composables/usePosts";
 const db = useFirestore();
 const firePosts = useCollection(collection(db, "posts"));
 
+const route = useRoute();
+
+const filteredPosts = computed(() => {
+  return firePosts.value.filter((post) => {
+    if (route.query.filter == "archived") {
+      return post.status === "archived";
+    }
+    if (route.query.filter == "published") {
+      return post.status === "published";
+    }
+    if (route.query.filter == "draft") {
+      return post.status === "draft";
+    }
+    return post.status !== "archived";
+  });
+});
+
 const timeOptions = {
   year: "numeric",
   month: "numeric",
@@ -17,17 +34,15 @@ const timeOptions = {
   second: "numeric",
 };
 
-async function archivePost(id: string) {
+async function changeStatus(id: string, status: PostStatus): Promise<void> {
   const docRef = doc(db, "posts", id);
-
-  const status: PostStatus = "archived";
 
   await updateDoc(docRef, {
     status,
   });
 }
 
-function statusColorClasses(status: PostStatus) {
+function statusColorClasses(status: PostStatus): string {
   switch (status) {
     case "published":
       return "bg-emerald-500";
@@ -39,9 +54,24 @@ function statusColorClasses(status: PostStatus) {
       return "bg-rose-500";
   }
 }
+
+function addQuery(status?: PostStatus): void {
+  navigateTo({ path: "/gate/posts/", query: { filter: status } });
+}
 </script>
 
 <template>
+  <div class="flex gap-2">
+    <BaseButton @click="addQuery()" :disabled="!route.query.filter"
+      >All</BaseButton
+    >
+    <BaseButton
+      @click="addQuery('archived')"
+      :disabled="route.query.filter == 'archived'"
+      >Archived</BaseButton
+    >
+  </div>
+
   <div
     class="overflow-x-scroll border border-solid shadow-xl rounded-xl border-slate-200"
   >
@@ -61,7 +91,7 @@ function statusColorClasses(status: PostStatus) {
         status,
         timestamp_created,
         timestamp_updated,
-      } in firePosts"
+      } in filteredPosts"
       class="flex px-4 py-2 transition-colors odd:bg-slate-50 hover:bg-slate-100 min-w-fit"
     >
       <div class="flex flex-col text-left grow min-w-96">
@@ -97,13 +127,24 @@ function statusColorClasses(status: PostStatus) {
 
       <div class="flex items-center justify-end gap-2 text-sm min-w-48">
         <div>
+          <BaseLink
+            v-if="status == 'draft'"
+            @click="changeStatus(id, 'archived')"
+            >Archive</BaseLink
+          >
+          <BaseLink
+            v-if="status == 'archived'"
+            @click="changeStatus(id, 'draft')"
+            >Draft</BaseLink
+          >
+        </div>
+
+        <div>
           <BaseLink target="_blank" :to="returnPostsSlug(slug)">View</BaseLink>
         </div>
+
         <div>
-          <BaseLink @click="archivePost(id)">Archive</BaseLink>
-        </div>
-        <div>
-          <BaseLink :to="'posts/edit/' + id">Edit</BaseLink>
+          <BaseLink :to="`edit/${id}`">Edit</BaseLink>
         </div>
       </div>
     </div>
