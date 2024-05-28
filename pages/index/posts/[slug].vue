@@ -8,8 +8,8 @@ import {
   type DocumentData,
   limit,
 } from "firebase/firestore";
-import type { Post } from "~/composables/usePosts";
-import { relatedPosts } from "~/composables/usePosts";
+
+import { relatedPosts, type Post } from "~/composables/usePosts";
 
 // const posts = usePosts();
 // const { title, content } = posts[1];
