@@ -69,3 +69,4 @@ export const postDefault = {
 };
 
 export const posts: Ref<Post[] | null> = ref(null);
+export const relatedPosts: Ref<Post[] | null> = ref(null);

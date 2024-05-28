@@ -1,30 +1,86 @@
 <script setup lang="ts">
-const posts = usePosts();
-const { title, content } = posts[1];
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  type QuerySnapshot,
+  type DocumentData,
+  limit,
+} from "firebase/firestore";
+import type { Post } from "~/composables/usePosts";
+import { relatedPosts } from "~/composables/usePosts";
+
+// const posts = usePosts();
+// const { title, content } = posts[1];
+const route = useRoute();
+
+const db = useFirestore();
+
+const post: Ref<Post | null> = ref(null);
+
+onMounted(async (): Promise<void> => {
+  const q = query(
+    collection(db, "posts"),
+    where("slug", "==", route.path.replace("/posts/", ""))
+  );
+
+  const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
+    await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    const postData = doc.data() as Post;
+    post.value = { id: doc.id, ...postData };
+  });
+});
+
+onMounted(async (): Promise<void> => {
+  if (!relatedPosts.value) {
+    const q = query(
+      collection(db, "posts"),
+      where("status", "==", "published"),
+      limit(3)
+    );
+
+    const tempArray: Post[] = [];
+
+    const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
+      await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const postData = doc.data() as Post;
+      tempArray.push({ id: doc.id, ...postData });
+    });
+
+    relatedPosts.value = tempArray;
+  }
+});
 </script>
 
 <template>
-  <div class="container flex flex-col gap-8 md:container">
-    <PostHero v-bind="posts[1]" />
+  <div class="container flex flex-col gap-8 md:container" v-if="post">
+    <PostHero v-bind="post" />
 
-    <div class="grid grid-cols-12">
-      <div class="col-span-3"></div>
-      <div class="col-span-6">
-        <h1 class="pb-2 text-xl font-bold">{{ title }}</h1>
+    <PostContentWrapper>
+      <template #title>{{ post.title }}</template>
 
-        <p>
-          {{ content }}
-        </p>
-      </div>
-      <div class="flex flex-col col-span-3 gap-4">
-        <p class="font-bold">Related posts</p>
+      <div :class="tiptapClasses" v-html="post.content"></div>
 
-        <div class="flex flex-col gap-4">
-          <div v-for="post in posts">
-            <PostCard v-bind="post"></PostCard>
+      <template #right>
+        <div class="flex flex-col col-span-3 gap-4">
+          <p class="font-bold">Related posts</p>
+
+          <div class="flex flex-col gap-4">
+            <div v-for="post in relatedPosts">
+              <PostCard v-bind="post"></PostCard>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </PostContentWrapper>
   </div>
 </template>
+
+<style>
+p:empty::after {
+  content: "\00A0";
+}
+</style>
