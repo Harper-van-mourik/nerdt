@@ -44,7 +44,7 @@ onMounted(async (): Promise<void> => {
     const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
       await getDocs(q);
     querySnapshot.forEach((doc): void => {
-      const postData = doc.data() as Post;
+      const postData: Post = doc.data() as Post;
       tempArray.push({ id: doc.id, ...postData });
     });
 
