@@ -1,9 +1,40 @@
 <script setup lang="ts">
-const posts = usePosts();
+import type { Post } from "~/composables/usePosts";
+import { posts } from "~/composables/usePosts";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  type QuerySnapshot,
+  type DocumentData,
+} from "firebase/firestore";
+const db = useFirestore();
+
+onMounted(async (): Promise<void> => {
+  if (!posts.value) {
+    const q = query(
+      collection(db, "posts"),
+      where("status", "==", "published")
+    );
+    const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
+      await getDocs(q);
+
+    const tempArray: Post[] = [];
+
+    querySnapshot.forEach((doc) => {
+      const postData = doc.data() as Post;
+      tempArray.push({ id: doc.id, ...postData });
+    });
+
+    posts.value = tempArray;
+  }
+});
 </script>
 
 <template>
-  <section class="">
+  <section>
     <div class="container flex flex-col gap-8 md:container">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         <div class="flex items-center col-span-1 p-4">
@@ -16,9 +47,12 @@ const posts = usePosts();
             </p>
           </div>
         </div>
-        <div v-for="post in posts">
-          <PostCard v-bind="post"></PostCard>
-        </div>
+
+        <template v-if="posts">
+          <div v-for="post in posts">
+            <PostCard v-bind="post"></PostCard>
+          </div>
+        </template>
       </div>
     </div>
   </section>
