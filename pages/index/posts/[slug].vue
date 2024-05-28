@@ -26,13 +26,12 @@ onMounted(async (): Promise<void> => {
 
   const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    const postData = doc.data() as Post;
+
+  querySnapshot.forEach((doc): void => {
+    const postData: Post = doc.data() as Post;
     post.value = { id: doc.id, ...postData };
   });
-});
 
-onMounted(async (): Promise<void> => {
   if (!relatedPosts.value) {
     const q: Query<DocumentData, DocumentData> = query(
       collection(db, "posts"),

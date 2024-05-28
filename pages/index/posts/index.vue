@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Post } from "~/composables/usePosts";
-import { posts } from "~/composables/usePosts";
+import { posts, type Post } from "~/composables/usePosts";
 
 import {
   collection,
@@ -9,12 +8,15 @@ import {
   getDocs,
   type QuerySnapshot,
   type DocumentData,
+  type Query,
+  type Firestore,
 } from "firebase/firestore";
-const db = useFirestore();
+
+const db: Firestore = useFirestore();
 
 onMounted(async (): Promise<void> => {
   if (!posts.value) {
-    const q = query(
+    const q: Query<DocumentData, DocumentData> = query(
       collection(db, "posts"),
       where("status", "==", "published")
     );
@@ -23,8 +25,8 @@ onMounted(async (): Promise<void> => {
 
     const tempArray: Post[] = [];
 
-    querySnapshot.forEach((doc) => {
-      const postData = doc.data() as Post;
+    querySnapshot.forEach((doc): void => {
+      const postData: Post = doc.data() as Post;
       tempArray.push({ id: doc.id, ...postData });
     });
 
