@@ -9,15 +9,7 @@
       <slot></slot>
     </div>
     <div class="flex flex-col col-span-3 gap-4">
-      <slot name="right">
-        <p class="font-bold">Related posts</p>
-
-        <div class="flex flex-col gap-4">
-          <div v-for="post in posts">
-            <PostCard v-bind="post"></PostCard>
-          </div>
-        </div>
-      </slot>
+      <slot name="right"> </slot>
     </div>
   </div>
 </template>
