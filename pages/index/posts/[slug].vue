@@ -4,26 +4,25 @@ import {
   query,
   where,
   getDocs,
+  limit,
   type QuerySnapshot,
   type DocumentData,
-  limit,
+  type Query,
+  type Firestore,
 } from "firebase/firestore";
+import { type RouteLocationNormalizedLoaded } from "vue-router";
 
 import { relatedPosts, type Post } from "~/composables/usePosts";
 
-// const posts = usePosts();
-// const { title, content } = posts[1];
-const route = useRoute();
+const route: RouteLocationNormalizedLoaded = useRoute();
 
-const db = useFirestore();
+const db: Firestore = useFirestore();
 
 const post: Ref<Post | null> = ref(null);
 
 onMounted(async (): Promise<void> => {
-  const q = query(
-    collection(db, "posts"),
-    where("slug", "==", route.path.replace("/posts/", ""))
-  );
+  const slug = route.path.replace("/posts/", "");
+  const q = query(collection(db, "posts"), where("slug", "==", slug));
 
   const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
     await getDocs(q);
@@ -35,7 +34,7 @@ onMounted(async (): Promise<void> => {
 
 onMounted(async (): Promise<void> => {
   if (!relatedPosts.value) {
-    const q = query(
+    const q: Query<DocumentData, DocumentData> = query(
       collection(db, "posts"),
       where("status", "==", "published"),
       limit(3)
@@ -45,7 +44,7 @@ onMounted(async (): Promise<void> => {
 
     const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
       await getDocs(q);
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach((doc): void => {
       const postData = doc.data() as Post;
       tempArray.push({ id: doc.id, ...postData });
     });
@@ -80,6 +79,7 @@ onMounted(async (): Promise<void> => {
 </template>
 
 <style>
+/* render html spacing for empty paragraphs */
 p:empty::after {
   content: "\00A0";
 }
