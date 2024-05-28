@@ -17,6 +17,10 @@ export declare interface Post {
   featured_image: string;
   timestamp_created?: Timestamp;
   timestamp_updated?: Timestamp;
+  seo: {
+    title: string;
+    description: string;
+  };
 }
 
 export const usePosts = () => {
@@ -27,22 +31,6 @@ const postsSlug = "/posts";
 
 export function returnPostsSlug(slug: string): string {
   return `${postsSlug}/${slug}`;
-}
-
-export function createSimpleHash(length: number) {
-  let result: string = "";
-
-  const characters: string =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength: number = characters.length;
-  let counter: number = 0;
-
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-
-  return result;
 }
 
 export const postDefaultContent = `
@@ -69,5 +57,5 @@ export const postDefault = {
 };
 
 export const posts: Ref<Post[] | null> = ref(null);
-export const relatedPosts: Ref<Post[] | null> = ref(null);
+export const relatedPostsw: Ref<Post[] | null> = ref(null);
 export const featuredPosts: Ref<Post[] | null> = ref(null);

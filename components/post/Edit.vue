@@ -74,7 +74,7 @@ async function updatePost(): Promise<void> {
       <template #right>
         <form class="flex flex-col gap-4" @submit.prevent="submitPost()">
           <div class="flex justify-between">
-            <div class="text-xl font-bold text-center">New post</div>
+            <div class="text-xl font-bold">Post settings</div>
             <BaseButton submit>
               <template v-if="post.id">Update post</template>
               <template v-else>Create post</template>
@@ -82,6 +82,8 @@ async function updatePost(): Promise<void> {
           </div>
 
           <FormSelect
+            label="Status"
+            name="status"
             v-model="post.status"
             :options="postStatusOptions"
           ></FormSelect>
@@ -106,6 +108,22 @@ async function updatePost(): Promise<void> {
             label="Featured image"
             name="featured-image"
             placeholder="url"
+          ></FormInput>
+
+          <p class="font-bold">SEO Settings</p>
+
+          <FormInput
+            v-model="post.seo.title"
+            label="Title"
+            name="seo-title"
+            placeholder="SEO title"
+          ></FormInput>
+
+          <FormInput
+            v-model="post.seo.description"
+            label="Description"
+            name="seo-description"
+            placeholder="SEO description"
           ></FormInput>
         </form>
       </template>

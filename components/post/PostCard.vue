@@ -3,7 +3,12 @@ import type { Post } from "~/composables/usePosts";
 
 const props = defineProps<Post>();
 
-const { slug, featured_image, title } = props;
+const {
+  slug,
+  featured_image,
+  title,
+  seo: { description },
+} = props;
 </script>
 
 <template>
@@ -29,7 +34,7 @@ const { slug, featured_image, title } = props;
         <div
           class="line-clamp-1 group-hover:line-clamp-4 group-focus:line-clamp-4"
         >
-          {{ content }}
+          {{ description }}
         </div>
       </div>
     </div>

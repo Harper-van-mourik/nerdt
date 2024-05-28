@@ -144,7 +144,7 @@ function addQuery(status?: PostStatus): void {
         </div>
 
         <div>
-          <BaseLink :to="`edit/${id}`">Edit</BaseLink>
+          <BaseLink :to="`/gate/posts/edit/${id}`">Edit</BaseLink>
         </div>
       </div>
     </div>
