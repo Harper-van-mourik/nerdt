@@ -7,9 +7,6 @@ const timeOptions = {
   year: "numeric",
   month: "numeric",
   day: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  second: "numeric",
 };
 </script>
 
@@ -30,26 +27,13 @@ const timeOptions = {
           >
             <div class="flex pr-3">
               <NuxtLink :to="`/posts/`" class="py-2 pl-3 font-bold underline"
-                >Posts</NuxtLink
+                >Posts/</NuxtLink
               >
-              <p class="py-2 text-slate-50">&nbsp;/ {{ slug }}</p>
+              <p class="py-2 text-slate-50">{{ slug }}</p>
             </div>
 
-            <div
-              class="px-3 py-2"
-              v-if="timestamp_created || timestamp_updated"
-            >
-              <p v-if="timestamp_updated">
-                <ClientOnly>
-                  {{
-                    formatFirebaseSecondsTime(
-                      timestamp_updated.seconds,
-                      timeOptions
-                    )
-                  }}
-                </ClientOnly>
-              </p>
-              <p v-else-if="timestamp_created">
+            <div class="px-3 py-2" v-if="timestamp_created">
+              <p>
                 <ClientOnly>
                   {{
                     formatFirebaseSecondsTime(
