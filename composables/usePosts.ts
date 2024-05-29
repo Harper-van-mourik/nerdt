@@ -57,5 +57,5 @@ export const postDefault = {
 };
 
 export const posts: Ref<Post[] | null> = ref(null);
-export const relatedPostsw: Ref<Post[] | null> = ref(null);
+export const relatedPosts: Ref<Post[] | null> = ref(null);
 export const featuredPosts: Ref<Post[] | null> = ref(null);

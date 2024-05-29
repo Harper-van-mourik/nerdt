@@ -11,8 +11,11 @@ import {
 
 import { featuredPosts, type Post } from "~/composables/usePosts";
 
+const isLoading: Ref<boolean> = ref(true);
+
 const db = useFirestore();
-onMounted(async (): Promise<void> => {
+
+async function getFeaturedPosts(): Promise<void> {
   if (!featuredPosts.value) {
     const q = query(
       collection(db, "posts"),
@@ -25,12 +28,17 @@ onMounted(async (): Promise<void> => {
     const querySnapshot: QuerySnapshot<DocumentData, DocumentData> =
       await getDocs(q);
     querySnapshot.forEach((doc) => {
-      const postData = doc.data() as Post;
+      const postData: Post = doc.data() as Post;
       tempArray.push({ id: doc.id, ...postData });
     });
 
     featuredPosts.value = tempArray;
   }
+  isLoading.value = false;
+}
+
+onMounted((): void => {
+  getFeaturedPosts();
 });
 </script>
 
@@ -47,9 +55,17 @@ onMounted(async (): Promise<void> => {
       </p>
     </div>
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-      <div v-for="post in featuredPosts">
-        <PostCard v-bind="post"></PostCard>
-      </div>
+      <template v-if="!isLoading">
+        <div v-for="post in featuredPosts">
+          <PostCard :post="post"></PostCard>
+        </div>
+      </template>
+
+      <template v-if="isLoading">
+        <div v-for="_ in 4">
+          <PostCard :is-loading="true"></PostCard>
+        </div>
+      </template>
     </div>
   </div>
 </template>

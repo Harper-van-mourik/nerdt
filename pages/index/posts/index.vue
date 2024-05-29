@@ -14,7 +14,9 @@ import {
 
 const db: Firestore = useFirestore();
 
-onMounted(async (): Promise<void> => {
+const isLoading: Ref<boolean> = ref(true);
+
+async function getPublishedPosts(): Promise<void> {
   if (!posts.value) {
     const q: Query<DocumentData, DocumentData> = query(
       collection(db, "posts"),
@@ -32,6 +34,11 @@ onMounted(async (): Promise<void> => {
 
     posts.value = tempArray;
   }
+  isLoading.value = false;
+}
+
+onMounted((): void => {
+  getPublishedPosts();
 });
 </script>
 
@@ -50,9 +57,15 @@ onMounted(async (): Promise<void> => {
           </div>
         </div>
 
-        <template v-if="posts">
+        <template v-if="!isLoading">
           <div v-for="post in posts">
-            <PostCard v-bind="post"></PostCard>
+            <PostCard :post="post"></PostCard>
+          </div>
+        </template>
+
+        <template v-if="isLoading">
+          <div v-for="_ in 6">
+            <PostCard :is-loading="true"></PostCard>
           </div>
         </template>
       </div>

@@ -19,8 +19,14 @@ const route: RouteLocationNormalizedLoaded = useRoute();
 const db: Firestore = useFirestore();
 
 const post: Ref<Post | null> = ref(null);
+const isLoading: Ref<boolean> = ref(true);
 
-onMounted(async (): Promise<void> => {
+onMounted((): void => {
+  getPostFromSlug();
+  getRelatedPosts();
+});
+
+async function getPostFromSlug(): Promise<void> {
   const slug = route.path.replace("/posts/", "");
   const q = query(collection(db, "posts"), where("slug", "==", slug));
 
@@ -31,7 +37,9 @@ onMounted(async (): Promise<void> => {
     const postData: Post = doc.data() as Post;
     post.value = { id: doc.id, ...postData };
   });
+}
 
+async function getRelatedPosts(): Promise<void> {
   if (!relatedPosts.value) {
     const q: Query<DocumentData, DocumentData> = query(
       collection(db, "posts"),
@@ -50,7 +58,8 @@ onMounted(async (): Promise<void> => {
 
     relatedPosts.value = tempArray;
   }
-});
+  isLoading.value = false;
+}
 </script>
 
 <template>
@@ -67,9 +76,17 @@ onMounted(async (): Promise<void> => {
           <p class="font-bold">Related posts</p>
 
           <div class="flex flex-col gap-4">
-            <div v-for="post in relatedPosts">
-              <PostCard v-bind="post"></PostCard>
-            </div>
+            <template v-if="!isLoading">
+              <div v-for="post in relatedPosts">
+                <PostCard :post="post"></PostCard>
+              </div>
+            </template>
+
+            <template v-if="isLoading">
+              <div v-for="_ in 6">
+                <PostCard :is-loading="true"></PostCard>
+              </div>
+            </template>
           </div>
         </div>
       </template>
