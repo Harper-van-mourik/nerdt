@@ -41,8 +41,11 @@ async function getPostFromSlug(): Promise<void> {
 
 async function getRelatedPosts(): Promise<void> {
   if (!relatedPosts.value) {
+    const slug = route.path.replace("/posts/", "");
+
     const q: Query<DocumentData, DocumentData> = query(
       collection(db, "posts"),
+      where("slug", "!=", slug),
       where("status", "==", "published"),
       limit(3)
     );
@@ -83,7 +86,7 @@ async function getRelatedPosts(): Promise<void> {
             </template>
 
             <template v-if="isLoading">
-              <div v-for="_ in 6">
+              <div v-for="_ in 3">
                 <PostCard :is-loading="true"></PostCard>
               </div>
             </template>
