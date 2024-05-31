@@ -72,7 +72,7 @@ async function updatePost(): Promise<void> {
       </div>
 
       <template #right>
-        <form class="flex flex-col gap-4" @submit.prevent="submitPost()">
+        <form class="flex flex-col gap-8" @submit.prevent="submitPost()">
           <div class="flex justify-between">
             <div class="text-xl font-bold">Post settings</div>
             <BaseButton submit>
@@ -88,43 +88,49 @@ async function updatePost(): Promise<void> {
             :options="postStatusOptions"
           ></FormSelect>
 
-          <FormInput
-            v-model="post.title"
-            label="Title"
-            name="title"
-            placeholder="Enter your title"
-          ></FormInput>
+          <div class="flex flex-col gap-2">
+            <p class="font-bold">General</p>
 
-          <FormInput
-            v-model="post.slug"
-            label="Slug"
-            name="slug"
-            placeholder="Enter your slug"
-            :pattern="patternSlug"
-          ></FormInput>
+            <FormInput
+              v-model="post.title"
+              label="Title"
+              name="title"
+              placeholder="Enter your title"
+            ></FormInput>
 
-          <FormInput
-            v-model="post.featured_image"
-            label="Featured image"
-            name="featured-image"
-            placeholder="url"
-          ></FormInput>
+            <FormInput
+              v-model="post.slug"
+              label="Slug"
+              name="slug"
+              placeholder="Enter your slug"
+              :pattern="patternSlug"
+            ></FormInput>
 
-          <p class="font-bold">SEO Settings</p>
+            <FormInput
+              v-model="post.featured_image"
+              label="Featured image"
+              name="featured-image"
+              placeholder="url"
+            ></FormInput>
+          </div>
 
-          <FormInput
-            v-model="post.seo.title"
-            label="Title"
-            name="seo-title"
-            placeholder="SEO title"
-          ></FormInput>
+          <div class="flex flex-col gap-2">
+            <p class="font-bold">SEO</p>
 
-          <FormInput
-            v-model="post.seo.description"
-            label="Description"
-            name="seo-description"
-            placeholder="SEO description"
-          ></FormInput>
+            <FormInput
+              v-model="post.seo.title"
+              label="Title"
+              name="seo-title"
+              placeholder="SEO title"
+            ></FormInput>
+
+            <FormInput
+              v-model="post.seo.description"
+              label="Description"
+              name="seo-description"
+              placeholder="SEO description"
+            ></FormInput>
+          </div>
         </form>
       </template>
     </PostContentWrapper>
