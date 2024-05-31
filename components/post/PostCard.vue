@@ -32,10 +32,8 @@ const cardClasses: string = "h-48 rounded-xl p-2 flex flex-col justify-end";
             </div>
           </div>
 
-          <div class="font-bold line-clamp-2">{{ post.title }}</div>
-          <div
-            class="line-clamp-1 group-hover:line-clamp-4 group-focus:line-clamp-4"
-          >
+          <div class="font-bold line-clamp-3">{{ post.title }}</div>
+          <div class="hidden group-hover:line-clamp-2 group-focus:line-clamp-2">
             {{ post.seo.description }}
           </div>
         </div>
