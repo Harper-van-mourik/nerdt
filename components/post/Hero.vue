@@ -25,26 +25,23 @@ const timeOptions = {
             :alt="title"
             class="object-cover w-full h-full"
             v-if="featured_image"
+            :title="title"
           />
-
-          <div v-else>
-            <p class="text-slate-400">Choose a image</p>
-          </div>
         </div>
         <div
-          class="absolute top-0 left-0 flex flex-col justify-end w-full h-full p-4"
+          class="absolute top-0 left-0 flex flex-col justify-end w-full h-full p-4 pointer-events-none"
         >
           <div
             class="flex justify-between text-white [&>div]:bg-gradient-to-r [&>div]:from-black/70 [&>div]:to-black/30 [&>div]:rounded-lg [&>div]:backdrop-blur-sm"
           >
-            <div class="flex pr-3">
+            <div class="flex pr-3 pointer-events-auto">
               <NuxtLink :to="`/posts/`" class="py-2 pl-3 font-bold underline"
                 >Posts/</NuxtLink
               >
               <p class="py-2 text-slate-50">{{ slug }}</p>
             </div>
 
-            <div class="px-3 py-2" v-if="timestamp_created">
+            <div class="px-3 py-2 pointer-events-auto" v-if="timestamp_created">
               <p>
                 <ClientOnly>
                   {{
