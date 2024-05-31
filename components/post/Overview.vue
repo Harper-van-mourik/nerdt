@@ -127,16 +127,13 @@ function addQuery(status?: PostStatus): void {
 
       <div class="flex items-center justify-end gap-2 text-sm min-w-48">
         <div>
-          <BaseLink
-            v-if="status == 'draft'"
-            @click="changeStatus(id, 'archived')"
-            >Archive</BaseLink
-          >
-          <BaseLink
-            v-if="status == 'archived'"
-            @click="changeStatus(id, 'draft')"
-            >Draft</BaseLink
-          >
+          <template v-if="status != 'draft'">
+            <BaseLink @click="changeStatus(id, 'draft')">Draft</BaseLink>
+          </template>
+
+          <template v-if="status == 'draft'">
+            <BaseLink @click="changeStatus(id, 'archived')">Archive</BaseLink>
+          </template>
         </div>
 
         <div>
