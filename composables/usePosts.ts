@@ -47,13 +47,17 @@ width: 12px
 <p></p>
 <img src="https://images.unsplash.com/photo-1605816988069-b11383b50717?q=80&amp;w=2976&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" contenteditable="false" draggable="true" class="ProseMirror-selectednode">`;
 
-export const postDefault = {
-  title: "Title goes here",
+export const postDefault: Post = {
+  title: "",
   slug: "",
   status: "draft",
   content: postDefaultContent,
   featured_image:
     "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  seo: {
+    title: "",
+    description: "",
+  },
 };
 
 export const posts: Ref<Post[] | null> = ref(null);
