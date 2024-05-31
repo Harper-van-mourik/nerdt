@@ -14,11 +14,23 @@ const timeOptions = {
   <section class="text-xs">
     <div class="flex flex-col gap-2">
       <div class="relative">
-        <img
-          :src="featured_image"
-          :alt="title"
-          class="object-cover w-full h-48 lg:h-96 rounded-xl"
-        />
+        <div
+          class="h-48 overflow-hidden lg:h-96 bg-slate-200 rounded-xl"
+          :class="{
+            'flex items-center justify-center': !featured_image,
+          }"
+        >
+          <img
+            :src="featured_image"
+            :alt="title"
+            class="object-cover w-full h-full"
+            v-if="featured_image"
+          />
+
+          <div v-else>
+            <p class="text-slate-400">Choose a image</p>
+          </div>
+        </div>
         <div
           class="absolute top-0 left-0 flex flex-col justify-end w-full h-full p-4"
         >
