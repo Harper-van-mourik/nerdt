@@ -46,10 +46,8 @@ function statusColorClasses(status: PostStatus): string {
   switch (status) {
     case "published":
       return "bg-emerald-500";
-      break;
     case "draft":
       return "bg-amber-500";
-      break;
     default:
       return "bg-rose-500";
   }
