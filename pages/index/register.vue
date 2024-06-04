@@ -42,7 +42,7 @@ if (user) {
       <h1 class="text-lg font-bold text-center">Signup</h1>
       <div class="flex flex-col gap-2">
         <BaseLink to="/login">&laquo; Back to login</BaseLink>
-        <form
+        <!-- <form
           @submit.prevent="submitSignUp(email, password)"
           class="flex flex-col gap-4"
         >
@@ -64,7 +64,12 @@ if (user) {
           <div v-if="errorMessage" class="text-center text-rose-500">
             {{ errorMessage }}
           </div>
-        </form>
+        </form> -->
+        <div class="p-3 border-2 border-solid rounded border-slate-950">
+          <h3 class="text-lg font-bold text-center">
+            Signup is currently unavaible.
+          </h3>
+        </div>
       </div>
     </div>
   </div>
