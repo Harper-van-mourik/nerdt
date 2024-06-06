@@ -72,13 +72,15 @@ async function getRelatedPosts(): Promise<void> {
     <PostContentWrapper>
       <template #title>{{ post.title }}</template>
 
-      <div :class="tiptapClasses" v-html="post.content"></div>
+      <div :class="tiptapClasses">
+        <div class="tiptap" v-html="post.content"></div>
+      </div>
 
       <template #right>
         <div class="flex flex-col col-span-3 gap-4">
           <p class="font-bold">Related posts</p>
 
-          <div class="flex flex-col gap-4">
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             <template v-if="!isLoading">
               <div v-for="post in relatedPosts">
                 <PostCard :post="post"></PostCard>
